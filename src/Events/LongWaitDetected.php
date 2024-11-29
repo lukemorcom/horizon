@@ -2,6 +2,7 @@
 
 namespace Laravel\Horizon\Events;
 
+use Laravel\Horizon\Horizon;
 use Laravel\Horizon\Notifications\LongWaitDetected as LongWaitDetectedNotification;
 
 class LongWaitDetected
@@ -49,7 +50,9 @@ class LongWaitDetected
      */
     public function toNotification()
     {
-        return new LongWaitDetectedNotification(
+        $notificationClass = Horizon::$notificationOverrides[$this::class] ?: LongWaitDetectedNotification::class;
+
+        return new $notificationClass(
             $this->connection, $this->queue, $this->seconds
         );
     }
