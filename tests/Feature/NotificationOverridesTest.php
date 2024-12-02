@@ -25,6 +25,17 @@ class NotificationOverridesTest extends IntegrationTest
 
         Notification::assertSentOnDemand(CustomLongWaitDetectedNotification::class);
     }
+
+    public function test_normal_notifications_are_sent_if_not_specified()
+    {
+        Notification::fake();
+
+        Horizon::routeMailNotificationsTo('taylor@laravel.com');
+
+        event(new LongWaitDetected('redis', 'test-queue-2', 60));
+
+        Notification::assertSentOnDemand(LongWaitDetectedNotification::class);
+    }
 }
 
 class CustomLongWaitDetectedNotification extends LongWaitDetectedNotification implements LongWaitDetectedNotificationContract
