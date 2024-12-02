@@ -55,14 +55,6 @@ class Horizon
     public static $useDarkTheme = false;
 
     /**
-     * The custom notifications to use.
-     *
-     * @var array
-     */
-    public static $notificationOverrides;
-
-
-    /**
      * The database configuration methods.
      *
      * @var array
@@ -229,19 +221,6 @@ class Horizon
     public static function routeSmsNotificationsTo($number)
     {
         static::$smsNumber = $number;
-
-        return new static;
-    }
-
-    /**
-     * Specify any custom notification classes which should be used.
-     *
-     * @param  array  $overrides
-     * @return static
-     */
-    public static function overrideNotifications($overrides)
-    {
-        static::$notificationOverrides = $overrides;
 
         return new static;
     }
